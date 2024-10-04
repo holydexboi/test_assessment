@@ -1,0 +1,8 @@
+.ipynb_checkpoints/
+online_retail_data/
+data_pgadmin/
+logs/
+plugins/
+redis_data/
+config/
+*.csv

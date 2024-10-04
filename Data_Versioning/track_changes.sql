@@ -1,0 +1,55 @@
+ALTER TABLE IF EXISTS "DimCustomer"
+    ADD COLUMN "createdAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+ALTER TABLE IF EXISTS "DimCustomer"
+    ADD COLUMN "updatedAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+
+
+ALTER TABLE IF EXISTS "DimMonth"
+    ADD COLUMN "createdAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+ALTER TABLE IF EXISTS "DimMonth"
+    ADD COLUMN "updatedAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+
+
+ALTER TABLE IF EXISTS "DimProduct"
+    ADD COLUMN "createdAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+ALTER TABLE IF EXISTS "DimProduct"
+    ADD COLUMN "updatedAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+
+
+ALTER TABLE IF EXISTS "FactSales"
+    ADD COLUMN "createdAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+ALTER TABLE IF EXISTS "FactSales"
+    ADD COLUMN "updatedAt" timestamp WITHOUT TIME ZONE DEFAULT NOW() NOT NULL;
+
+
+CREATE OR REPLACE FUNCTION update_column()
+RETURNS TRIGGER AS
+$$
+BEGIN
+	NEW."UpdatedAt" = NOW();
+	RETURN NEW; 
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_column_trigger
+BEFORE UPDATE ON "DimCustomer"
+FOR EACH ROW
+EXECUTE FUNCTION update_column();
+
+
+CREATE TRIGGER update_column_trigger
+BEFORE UPDATE ON "DimMonth"
+FOR EACH ROW
+EXECUTE FUNCTION update_column();
+
+CREATE TRIGGER update_column_trigger
+BEFORE UPDATE ON "DimProduct"
+FOR EACH ROW
+EXECUTE FUNCTION update_column();
+
+
+CREATE TRIGGER update_column_trigger
+BEFORE UPDATE ON "FactSales"
+FOR EACH ROW
+EXECUTE FUNCTION update_column();
