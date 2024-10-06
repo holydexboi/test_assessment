@@ -1,6 +1,5 @@
 
 --- TOTAL QUANTITY OF PRODUCT SHIPPED BY EACH PRODUCT CATEGORY
-
 SELECT pr."productCategory", SUM(sh.quantity) AS qty
 FROM shipment sh
 INNER JOIN product pr
