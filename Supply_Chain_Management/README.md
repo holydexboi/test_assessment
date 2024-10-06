@@ -5,18 +5,19 @@
 The Data Warehouse Solution is designed to have 7 Tables which include shipment, product, supplier, warehouse, time, order and shipment_history to manage historical data. The system is built using PostgreSQL.
 
 ## Project Structure
-.
-├── Supply_Chain_Management/
-|   ├── Advance_Task_Images         # Folder Containing the images of the Advance Task query solution 
-|   ├── Task1_Images                # Folder Containing the images of the First Task query solution 
-|   ├── advance_task.sql            # SQL script containing the advance task query solution
-|   ├── create_table.sql            # SQL script for initializing the database
-|   ├── insert_data.sql             # SQL script for inserting sample data
-|   ├── supply_chain_schema.png     # Image of the ERD diagram of the Data Warehouse
-|   ├── task_1.sql                  # SQL script containing the first task query solution
-|   ├── README.md                   # Project documentation
-└── docker-compose.yaml
-
+```bash
+    .
+    ├── Supply_Chain_Management/
+    |   ├── Advance_Task_Images         # Folder Containing the images of the Advance Task query solution 
+    |   ├── Task1_Images                # Folder Containing the images of the First Task query solution 
+    |   ├── advance_task.sql            # SQL script containing the advance task query solution
+    |   ├── create_table.sql            # SQL script for initializing the database
+    |   ├── insert_data.sql             # SQL script for inserting sample data
+    |   ├── supply_chain_schema.png     # Image of the ERD diagram of the Data Warehouse
+    |   ├── task_1.sql                  # SQL script containing the first task query solution
+    |   ├── README.md                   # Project documentation
+    └── docker-compose.yaml
+```
 ## Technologies Used
 - Database: Postgres
 - GUI: pgAdmin
