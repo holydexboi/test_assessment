@@ -33,12 +33,14 @@ The Data Warehouse Solution is designed to have 7 Tables which include shipment,
 - time: shipment date-related information, including year, month, and day.
 
 ## Schema Overview:
+```bash
 - shipment (shipmentId, productId, supplierId, warehouseId, orderId, shipmentDate, quantity, timeId, shippingDuration, shipmentValue)
 - product (productId, productName, price, productCategory)
 - supplier (supplierId, supplierName)
 - warehouse (warehouseId, warehouseName, location)
 - order (orderId, customerName, orderDate)
 - time (timeId, year, month, monthName, day, dayname, week)
+```
 
 ## Setup Instructions:
 1. Clone this repository or download the project following the [link](#project-structure)
