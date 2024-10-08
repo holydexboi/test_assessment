@@ -14,62 +14,66 @@ CREATE TABLE IF NOT EXISTS public."DimMonth"
     CONSTRAINT "DimMonth_pkey" PRIMARY KEY ("monthId", year)
 ) PARTITION BY RANGE (year);
 
-CREATE TABLE DimMonth_2010 PARTITION OF "DimMonth"
-FOR VALUES FROM (2010) TO (2011);
+
+CREATE TABLE public."DimMonth_2010" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2010-01-01) TO (2011-01-01);
+
+CREATE TABLE public."DimMonth_2011" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2011-01-01) TO (2012-01-01);
+
+CREATE TABLE public."DimMonth_2012" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2012-01-01) TO (2013-01-01);
+
+CREATE TABLE public."DimMonth_2013" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2013-01-01) TO (2014-01-01);
+
+CREATE TABLE public."DimMonth_2014" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2014-01-01) TO (2015-01-01);
+
+CREATE TABLE public."DimMonth_2015" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2015-01-01) TO (2016-01-01);
+
+CREATE TABLE public."DimMonth_2016" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2016-01-01) TO (2017-01-01);
+
+CREATE TABLE public."DimMonth_2017" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2017-01-01) TO (2018-01-01);
+
+CREATE TABLE public."DimMonth_2018" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2018-01-01) TO (2019-01-01);
+
+CREATE TABLE public."DimMonth_2019" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2019-01-01) TO (2020-01-01);
+
+CREATE TABLE public."DimMonth_2020" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2020-01-01) TO (2021-01-01);
+
+CREATE TABLE public."DimMonth_2021" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2021-01-01) TO (2022-01-01);
+
+CREATE TABLE public."DimMonth_2022" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2022-01-01) TO (2023-01-01);
+
+CREATE TABLE public."DimMonth_2023" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2023-01-01) TO (2024-01-01);
+
+CREATE TABLE public."DimMonth_2024" PARTITION OF public."DimMonth"
+    FOR VALUES FROM (2024-01-01) TO (2025-01-01);
 
 
-CREATE TABLE DimMonth_2011 PARTITION OF "DimMonth"
-FOR VALUES FROM (2011) TO (2012);
 
-CREATE TABLE DimMonth_2012 PARTITION OF "DimMonth"
-FOR VALUES FROM (2012) TO (2013);
+CREATE INDEX "DimMonth_year"
+    ON public."DimMonth" USING btree
+    (year)
 
-CREATE TABLE DimMonth_2013 PARTITION OF "DimMonth"
-FOR VALUES FROM (2013) TO (2014);
+CREATE INDEX "DimMonth_month"
+    ON public."DimMonth" USING btree
+    (month)
 
-CREATE TABLE DimMonth_2014 PARTITION OF "DimMonth"
-FOR VALUES FROM (2014) TO (2015);
+CREATE INDEX "DimMonth_week"
+    ON public."DimMonth" USING btree
+    (week)
 
-CREATE TABLE DimMonth_2015 PARTITION OF "DimMonth"
-FOR VALUES FROM (2015) TO (2016);
-
-CREATE TABLE DimMonth_2016 PARTITION OF "DimMonth"
-FOR VALUES FROM (2016) TO (2017);
-
-CREATE TABLE DimMonth_2017 PARTITION OF "DimMonth"
-FOR VALUES FROM (2017) TO (2018);
-
-CREATE TABLE DimMonth_2018 PARTITION OF "DimMonth"
-FOR VALUES FROM (2018) TO (2019);
-
-CREATE TABLE DimMonth_2019 PARTITION OF "DimMonth"
-FOR VALUES FROM (2019) TO (2020);
-
-CREATE TABLE DimMonth_2020 PARTITION OF "DimMonth"
-FOR VALUES FROM (2020) TO (2021);
-
-CREATE TABLE DimMonth_2021 PARTITION OF "DimMonth"
-FOR VALUES FROM (2021) TO (2022);
-
-CREATE TABLE DimMonth_2022 PARTITION OF "DimMonth"
-FOR VALUES FROM (2022) TO (2023);
-
-CREATE TABLE DimMonth_2023 PARTITION OF "DimMonth"
-FOR VALUES FROM (2023) TO (2024);
-
-CREATE TABLE DimMonth_2024 PARTITION OF "DimMonth"
-FOR VALUES FROM (2024) TO (2025);
-
-
-ALTER TABLE "DimMonth"
-CLUSTER ON "ix_DimMonth_monthId"
-
-CREATE INDEX "idx_DimMonth_year" ON "DimMonth"(year);
-
-CREATE INDEX "idx_DimMonth_month" ON "DimMonth"(month);
-
-CREATE INDEX "idx_DimMonth_day" ON "DimMonth"(day);
-
-CREATE INDEX "idx_DimMonth_quater" ON "DimMonth"(quater);
-
-CREATE INDEX "idx_DimMonth_week" ON "DimMonth"(week);
+CREATE INDEX "DimMonth_day"
+    ON public."DimMonth" USING btree
+    (day)

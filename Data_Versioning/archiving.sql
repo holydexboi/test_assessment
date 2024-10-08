@@ -1,47 +1,42 @@
-CREATE TABLE archive_table (
+CREATE TABLE afactsales_history (
     id SERIAL PRIMARY KEY,   
-    customerId INT,       
-    customernumber INT,        
-    customername TEXT,   
-    country TEXT,
-    createdAt TIMESTAMP,
-    updated_at TIMESTAMP,     
-    operation VARCHAR(10)         
+    salesId INT,       
+    quantity INT,        
+    amount double precision,   
+    "productId" INT,
+    "customerId" INT,
+    "monthId" INT,
+    invoicedate TIMESTAMP,
+    "invoiceNo" TEXT,
+    "createdAt" TIMESTAMP,
+    "updatedAt" TIMESTAMP,    
+    "actionType" VARCHAR(10)         
 );
 
-CREATE OR REPLACE FUNCTION archive_data() 
-RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION public.update_archive()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    COST 100
+AS $BODY$
 BEGIN
-    IF TG_OP = 'DELETE' THEN
-        
-        INSERT INTO "DimCustomer_archive" ("customerId", customernumber, customername, country, "createdAt", "updatedAt", operation)
-        VALUES (OLD."customerId", OLD.customernumber, OLD.customername, OLD.country, OLD."createdAt", NOW(), 'DELETE');
+  
+    IF (TG_OP = 'DELETE') THEN
+        INSERT INTO factsales_history ("salesId", quantity, amount, "productId", "customerId", "monthId", invoicedate, "invoiceNo", "createdAt", "updatedAt", "actionType")
+        VALUES (OLD."salesId", OLD.quantity, OLD.amount, OLD."productId", OLD."customerId", OLD."monthId", OLD.invoicedate, OLD."invoiceNo", OLD."createdAt", OLD."updatedAt", 'DELETE');
         RETURN OLD;
 
-    ELSIF TG_OP = 'UPDATE' THEN
-        
-        INSERT INTO "DimCustomer_archive" ("customerId", customernumber, customername, country, "createdAt", "updatedAt", operation)
-        VALUES (OLD."customerId", OLD.customernumber, OLD.customername, OLD.country, OLD."createdAt", NOW(), 'DELETE');
+    ELSIF (TG_OP = 'UPDATE') THEN
+        INSERT INTO factsales_history ("salesId", quantity, amount, "productId", "customerId", "monthId", invoicedate, "invoiceNo", "createdAt", "updatedAt", "actionType")
+        VALUES (OLD."salesId", OLD.quantity, OLD.amount, OLD."productId", OLD."customerId", OLD."monthId", OLD.invoicedate, OLD."invoiceNo", OLD."createdAt", OLD."updatedAt", 'UPDATE');
         RETURN NEW;
     END IF;
 END;
-$$ LANGUAGE plpgsql;
+$BODY$;
 
-
-CREATE OR REPLACE FUNCTION archive_data() 
-RETURNS TRIGGER AS $$
-BEGIN
-    IF TG_OP = 'DELETE' THEN
-        
-        INSERT INTO "DimCustomer_archive" ("customerId", customernumber, customername, country, "createdAt", "updatedAt", operation)
-        VALUES (OLD."customerId", OLD.customernumber, OLD.customername, OLD.country, OLD."createdAt", NOW(), 'DELETE');
-        RETURN OLD;
-
-    ELSIF TG_OP = 'UPDATE' THEN
-        
-        INSERT INTO "DimCustomer_archive" ("customerId", customernumber, customername, country, "createdAt", "updatedAt", operation)
-        VALUES (OLD."customerId", OLD.customernumber, OLD.customername, OLD.country, OLD."createdAt", NOW(), 'DELETE');
-        RETURN NEW;
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
+CREATE OR REPLACE TRIGGER update_trigger
+    AFTER DELETE OR UPDATE 
+    ON public."FactSales"
+    REFERENCING NEW TABLE AS factsales_history OLD TABLE AS "FactSales"
+    FOR EACH ROW
+    EXECUTE FUNCTION public.update_archive();

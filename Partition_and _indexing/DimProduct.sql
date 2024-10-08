@@ -7,3 +7,12 @@ CREATE TABLE IF NOT EXISTS public."DimProduct"
     CONSTRAINT "DimStock_pkey" PRIMARY KEY ("productId", stockcode)
 ) PARTITION BY LIST (stockcode);
 
+CREATE TABLE public."DimProduct_20000" PARTITION OF public."DimProduct"
+    FOR VALUES FROM (20000) TO (30000);
+
+CREATE TABLE public."DimProduct_DFLT" PARTITION OF public."DimProduct"
+    DEFAULT;
+
+CREATE INDEX "DimProduct_stockcode"
+    ON public."DimProduct" USING btree
+    (stockcode)
