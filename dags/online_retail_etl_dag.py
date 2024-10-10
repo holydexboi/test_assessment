@@ -36,7 +36,7 @@ data_ingestion = BashOperator(
         --db {{ var.value.postgres_db }}  \
         --port {{ var.value.postgres_port }} \
         --table_name retail_data \
-        --url https://drive.google.com/file/d/1EsGPjqgSuf3L5Ola4vCBQudou8ZObypy/view?usp=sharing
+        --url {{ var.value.postgres_url }}
         """,
         dag=dag
     )

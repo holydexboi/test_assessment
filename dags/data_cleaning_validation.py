@@ -51,6 +51,9 @@ def handle_integrity_consistency(df):
     df = df[df['Valid_InvoiceNo']]
 
     # ### Making sure **StockCode** column meet the rule: Product (item) code. Nominal, a 5-digit integral number uniquely assigned to each distinct product.
+
+    df['StockCode'] = df['StockCode'].str.replace(r'[A-Za-z]', '', regex=True)
+
     df.loc[:,'Valid_StockCode'] = df['StockCode'].apply(lambda x: x.isdigit() and len(x) == 5)
     df = df[df['Valid_StockCode']]
 

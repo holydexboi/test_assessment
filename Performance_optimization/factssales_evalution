@@ -1,0 +1,7 @@
+EXPLAIN ANALYZE
+SELECT "invoiceNo",
+	SUM(quantity) AS "TotalQuantity",
+	SUM(amount) AS "TotalAmount"
+FROM "FactSales"
+GROUP BY "invoiceNo"
+
